@@ -54,5 +54,23 @@ namespace RazorPagesMovie.Movie
 
             return RedirectToPage("./Index");
         }
+
+        public async Task<IActionResult> OnDeleteAsync(int? id)
+        {
+            if (id == null)
+            {
+                Movie = await _context.Movie.FirstOrDefaultAsync();
+            }
+            else
+            {
+                Movie = await _context.Movie.FirstOrDefaultAsync(m => m.ID == id);
+            }
+
+            if (Movie == null)
+            {
+                return NotFound();
+            }
+            return Page();
+        }
     }
 }
